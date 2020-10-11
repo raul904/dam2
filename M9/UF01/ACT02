@@ -1,1 +1,48 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Act2.SecretKey;
 
+/**
+ *
+ * @author Raul
+ */
+
+import javax.crypto.KeyGenerator;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.SecretKey;
+
+public class Act2Key {
+    
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+		
+	
+		byte [] encrip=keygenKeyGeneration(256).getEncoded();
+		for (int j=0; j<encrip.length; j++) {
+		System.out.println(Integer.toBinaryString(encrip[j] & 0xFF).replace(' ', '0')+ "-"+encrip[j] );
+		}
+		
+		
+	}
+
+	public static  SecretKey keygenKeyGeneration(int keySize) {
+        
+	SecretKey sKey = null;	
+	if ((keySize == 128 )|| (keySize == 192)|| ( keySize == 256)) {
+		try {
+		KeyGenerator kgen = KeyGenerator.getInstance("AES");
+		kgen.init(keySize);
+		sKey= kgen.generateKey();		
+		}catch (NoSuchAlgorithmException ex) {
+		System.err.println("Generador no disponible" );
+			}
+		}
+	return sKey;
+		} 
+	
+	
+
+    
+}
