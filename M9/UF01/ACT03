@@ -1,1 +1,77 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Act3;
 
+/**
+ *
+ * @author Raul
+ */
+import static Act2.SecretKey.Act2Key.keygenKeyGeneration;
+import javax.crypto.KeyGenerator;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.SecretKey;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import javax.crypto.spec.SecretKeySpec;
+
+public class act3 {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+		
+		byte [] encrip=passwordkeyGeneration("Raul",128).getEncoded();
+		for (int j=0; j<encrip.length; j++) {
+		System.out.println(Integer.toBinaryString(encrip[j] & 0xFF).replace(' ', '@') );
+		}
+                
+    }
+                
+                
+    public static SecretKey passwordkeyGeneration(String text,int keySize){
+	SecretKey sKey = null;
+	if ((keySize == 128)|| (keySize==192)||(keySize==256)) {
+		try {
+			byte[] data = text.getBytes("UTF-8");
+			MessageDigest md = MessageDigest.getInstance("SHA-124");
+			byte [] hash = md.digest(data);
+                        byte [] key = Arrays.copyOf(hash, keySize/8);
+			sKey = new SecretKeySpec(key, "AES");
+			
+		
+			
+		}catch(Exception ex) {
+                    
+			System.err.println("Error al generar la clau."+ ex);
+                        
+		}
+	} return sKey;
+      
+      }
+    public static SecretKey password(String encodehash,int tamany, String text){
+            SecretKeySpec password = null;
+    try{
+        
+        MessageDigest md = MessageDigest.getInstance(encodehash);
+        
+        byte[] contra = text.getBytes("UTF-8");
+        byte[] hash =md.digest(contra);   
+	byte[] key = Arrays.copyOf(hash, tamany/8);
+
+        password = new SecretKeySpec(key, "AES");
+
+            }catch(Exception ex){
+       
+                System.err.println("Error al generar la clau."+ ex);
+            
+            }
+      
+            return password;
+      
+      }
+      
+      }
