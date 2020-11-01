@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="true"?>
+
+<Alumnos>
+
+
+	<Alumno id="0">
+
+		<nombre>Raul</nombre>
+
+		<Apellido1>Gimenez</Apellido1>
+
+		<Apellido2>Perez</Apellido2>
+
+	</Alumno>
+
+
+	<Alumno id="1">
+
+		<nombre>Marina</nombre>
+
+		<Apellido1>Sanchez</Apellido1>
+
+		<Apellido2>Perez</Apellido2>
+
+	</Alumno>
+
+
+	<Alumno id="2">
+
+		<nombre>Jesus</nombre>
+
+		<Apellido1>Lopez</Apellido1>
+
+		<Apellido2>Georgian</Apellido2>
+
+	</Alumno>
+
+
+	<Alumno id="3">
+
+		<nombre>Alvaro</nombre>
+
+		<Apellido1>Garcia</Apellido1>
+
+		<Apellido2>Dominguez</Apellido2>
+
+	</Alumno>
+
+</Alumnos>
