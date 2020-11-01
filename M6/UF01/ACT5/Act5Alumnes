@@ -1,0 +1,149 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package m6;
+
+/**
+ *
+ * @author Raul
+ */
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+import java.lang.String;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import static m6.act5Nodos.nodoArrel;
+import static m6.alumne.mostraInformacioNode;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+public class Act5Alumnos {
+ 
+        public static Document doc;
+        public static Scanner sc = new Scanner(System.in);
+        public static Element nodoArrel;
+        public static String espacio=" ";
+        static String numId = null;
+    
+        
+        
+        public static void main(String args[]) throws ParserConfigurationException, SAXException, IOException,TransformerException {   
+        
+          File file = new File("C:\\Users\\Raul\\Documents\\M6\\Act05\\alumnos.xml");
+  
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            doc = dBuilder.parse(file);
+            
+            NodeList child;
+            NamedNodeMap atributos;
+            
+            Node nodoArrel = doc.getDocumentElement();
+         
+            child = nodoArrel.getChildNodes();
+            
+            
+            for(int i=0;i < child.getLength();i++){
+            if (child.item(i).getNodeName().equals("alumne")
+					&& child.item(i).hasAttributes()) {
+				atributos = child.item(i).getAttributes();
+				for (int j = 0; j < atributos.getLength(); j++) {
+					if (atributos.item(j).getNodeName().equals("numid")) {
+						numId = atributos.item(j).getNodeValue();
+						((Element) child.item(i)).setAttribute(numId, numId);
+					}
+				}
+			}
+            
+            
+            }
+         }
+        public static void opcions() throws TransformerException {
+        int chivato = 0;
+        int opcio = 0;
+   
+      
+        
+        while(chivato!=1){
+            
+            
+          System.out.println("1-Mostar XML");
+          System.out.println("2-Crear node");
+          System.out.println("3-Eliminar node");
+          System.out.println("4-Guardar canvis");
+          System.out.println("5-Terminar ");
+         
+          
+         opcio=sc.nextInt();
+          switch(opcio){
+          
+              case 1:
+                  System.out.println(nodoArrel.getNodeName());
+                  MostrarNodos(nodoArrel," ");
+                  
+              break;
+              case 2:
+                  //crearNodo();                  
+              break;
+                  
+              case 3:   
+                  //eliminarNodo();
+              break;    
+                  
+              case 4:
+                  //guardarCanvis();
+              break;    
+                  
+              case 5:
+                  chivato=1;
+               break;   
+                  
+                  
+          }
+          
+            
+                }
+
+     }
+
+    public static void MostrarNodos(Node  node, String espacio) {
+        NodeList child;
+        NamedNodeMap atributos;
+        
+        child = node.getChildNodes();
+        
+        for (int i = 0; i < child.getLength(); i++) {
+
+			if (!child.item(i).getNodeName().equals("#text")) {
+                        System.out.println(espacio + child.item(i).getNodeName());
+				if (child.item(i).hasAttributes()) {
+					atributos = child.item(i).getAttributes();
+					for (int k = 0; k < atributos.getLength(); k++) {
+						System.out.println(espacio + atributos.item(k).getNodeName());
+						System.out.println(espacio + atributos.item(k).getNodeValue());
+					}
+                                }
+                        }
+        }
+        
+        
+    }
+        
+
+}
+        
