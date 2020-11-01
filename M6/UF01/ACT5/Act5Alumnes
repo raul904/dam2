@@ -63,7 +63,7 @@ public class Act5Alumnos {
 					&& child.item(i).hasAttributes()) {
 				atributos = child.item(i).getAttributes();
 				for (int j = 0; j < atributos.getLength(); j++) {
-					if (atributos.item(j).getNodeName().equals("numid")) {
+					if (atributos.item(j).getNodeName().equals("id")) {
 						numId = atributos.item(j).getNodeValue();
 						((Element) child.item(i)).setAttribute(numId, numId);
 					}
@@ -129,7 +129,7 @@ public class Act5Alumnos {
         
         for (int i = 0; i < child.getLength(); i++) {
 
-			if (!child.item(i).getNodeName().equals("#text")) {
+			if (!child.item(i).getNodeName().equals()) {
                         System.out.println(espacio + child.item(i).getNodeName());
 				if (child.item(i).hasAttributes()) {
 					atributos = child.item(i).getAttributes();
@@ -146,4 +146,4 @@ public class Act5Alumnos {
         
 
 }
-        
+       
