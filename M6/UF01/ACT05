@@ -27,11 +27,14 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.NodeList;
 import static sun.net.util.IPAddressUtil.scan;
+
 public class act5Nodos {
        
         public static Document doc;
         public static Scanner sc = new Scanner(System.in);
         public static Element nodoArrel;
+    
+        
       public static void main(String args[]) throws ParserConfigurationException, SAXException, IOException,TransformerException {   
         
         File file = new File("C:\\Users\\Raul\\Desktop\\coches.xml");
@@ -40,24 +43,35 @@ public class act5Nodos {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(file);
-        Node nodeArrel = doc.getDocumentElement();
+        nodoArrel = doc.getDocumentElement();
      
-        NodeList nList = doc.getElementsByTagName("coche");
-      
+        
+        asignaId(nodoArrel);
+        
+        opcions();
+        }
+        public static void opcions() throws TransformerException {
         int chivato = 0;
         int opcio = 0;
         
+      
+        
         while(chivato!=1){
             
+            
           System.out.println("1-Mostar XML");
-          System.out.println("2-Eliminar node");
+          System.out.println("2-Crear node");
+          System.out.println("3-Eliminar node");
+          System.out.println("4-Guardar canvis");
+          System.out.println("5-Terminar ");
          
           
          opcio=sc.nextInt();
           switch(opcio){
           
               case 1:
-                System.out.println(nodeArrel);
+                System.out.println(nodoArrel);
+                NodeList nList = doc.getElementsByTagName("coche");
 
                         for (int i = 0; i < nList.getLength(); i++) {
                         Node node = nList.item(i);
@@ -76,18 +90,27 @@ public class act5Nodos {
                       }
               break;
               case 2:
-                  crearNodo();
-                  
+                  crearNodo();                  
               break;
+                  
+              case 3:   
+                  eliminarNodo();
+              break;    
+                  
+              case 4:
+                  guardarCanvis();
+              break;    
+                  
+              case 5:
+                  chivato=1;
+               break;   
+                  
+                  
           }
           
             
                 }
-        
-        
-        
-      
-      
+
      }
 
     public static void crearNodo() {
@@ -130,6 +153,55 @@ public class act5Nodos {
            
            }
     }
+
+    public static void eliminarNodo() {
+       int chi = 0 ;
+       String id;
+       String marca;
+       String matricula;
+       String precio;
+       
+       
+       while (chi!=1){
+       
+       System.out.println("Introduiex l'id del coche: ");
+       id = sc.next();
+       Element element = doc.getElementById(id);
+       
+       nodoArrel.removeChild(element);
+       
+       
+       
+       
+       }
+    }
+
+    public static void asignaId(Node element) {
+            if (element.hasAttributes()) {
+            for (int i = 0; i < element.getAttributes().getLength(); i++)
+            {
+            if (element.getAttributes().item(i).getNodeName().equals("id")){
+            ((Element) element).setIdAttribute("id", true);
+             }
+                 }   
+                          }
+
+            for (int i = 0; i < element.getChildNodes().getLength(); i++) {
+            if (element.getChildNodes().item(i).hasChildNodes()) {
+            asignaId(element.getChildNodes().item(i));
+ }
+
+ }
+
+ }
+
+    private static void guardarCanvis()throws TransformerException{
+   
+   Transformer tran = TransformerFactory.newInstance().newTransformer();
+   StreamResult resultado = new StreamResult(new File("C:\\Users\\Raul\\Desktop\\coches.xml"));
+    DOMSource source = new DOMSource(doc);
+        tran.transform(source, resultado);
+            System.exit(0);
+    }
     
 }
-
