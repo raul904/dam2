@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="true"?>
+
+<coches>
+
+
+<coche id="0">
+
+<marca>AUDI</marca>
+
+<matricula>30000</matricula>
+
+<precio>20000</precio>
+
+</coche>
+
+
+<coche id="1">
+
+<marca>SEAT</marca>
+
+<matricula>2222BBB</matricula>
+
+<precio>10000</precio>
+
+</coche>
+
+
+<coche id="2">
+
+<marca>BMW</marca>
+
+<matricula>3333CCC</matricula>
+
+<precio>4700</precio>
+
+</coche>
+
+
+<coche id="3">
+
+<marca>TOYOTA</marca>
+
+<matricula>4444DDD</matricula>
+
+<precio>8000</precio>
+
+</coche>
+
+</coches>
