@@ -5,55 +5,59 @@
  */
 package m6;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
-//import javax.lang.model.element.Element;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 /**
  *
  * @author Raul
  */
-public class Ac5 {
-    public static void main(String args[]) throws ParserConfigurationException, SAXException{
-    File file = new File("C:\\Users\\Raul\\Desktop\\concesionario.xml");
-       Scanner sc = new Scanner(System.in);
-    try {
-  DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-  DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-  Document doc = dBuilder.parse(file);
+import java.io.File;
+import org.xml.sax.SAXException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+import java.io.IOException;
+import java.util.Scanner;
+ import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.NodeList;
+import static sun.net.util.IPAddressUtil.scan;
+public class act5Nodos {
+       
+        public static Document doc;
+        public static Scanner sc = new Scanner(System.in);
+        public static Element nodoArrel;
+      public static void main(String args[]) throws ParserConfigurationException, SAXException, IOException,TransformerException {   
+        
+        File file = new File("C:\\Users\\Raul\\Desktop\\coches.xml");
   
 
-  Node nodeArrel = doc.getDocumentElement();
-  NodeList nList = doc.getElementsByTagName("coche");
-  int chivato = 0;
-  boolean chi = true;
-  
-  
-    
-
-  
-   //Element element = (Element) doc.getElementsByTagName("matricula").item(0); 
-           //element.getCoche().removeChild("matricula");  
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(file);
+        Node nodeArrel = doc.getDocumentElement();
+     
+        NodeList nList = doc.getElementsByTagName("coche");
+      
+        int chivato = 0;
         int opcio = 0;
-        while(chi= true){
-         System.out.println("1-Mostar XML");
+        
+        while(chivato!=1){
+            
+          System.out.println("1-Mostar XML");
           System.out.println("2-Eliminar node");
          
-          opcio=sc.nextInt();
           
-           switch (opcio){
-
-               case 1:
-                    
-                    System.out.println(nodeArrel);
+         opcio=sc.nextInt();
+          switch(opcio){
+          
+              case 1:
+                System.out.println(nodeArrel);
 
                         for (int i = 0; i < nList.getLength(); i++) {
                         Node node = nList.item(i);
@@ -70,35 +74,62 @@ public class Ac5 {
                                                              }
                                                                                }
                       }
-
-
-                   
-                 break;
-                   
-               case 2:
-                   
-                   
-               break;    
-
-
-
-           }
-
-
-
-
-
-
-       }	
-
-
-             
-     
+              break;
+              case 2:
+                  crearNodo();
+                  
+              break;
+          }
+          
+            
+                }
         
-   
+        
+        
+      
+      
+     }
+
+    public static void crearNodo() {
+        int chi = 0;
+        
+           while(chi!=1){
+               
+               String id;
+               String marca;
+               String matricula;
+               String precio;
+               
+               System.out.println("Introdueix l'id del coche");
+               id = sc.next();
+               System.out.println("marca:");
+               marca = sc.next();
+               System.out.println("matricula:");
+               matricula = sc.next();
+               System.out.println("precio:");
+               precio = sc.next();
            
-} catch(Exception e) {
-  //e.printStackTrace();
+                Element elementMarca = doc.createElement("marca");
+                elementMarca.appendChild(doc.createTextNode(marca));
+                Element elementMatricula = doc.createElement("matricula");
+                elementMatricula.appendChild(doc.createTextNode(matricula));
+                Element elementPrecio = doc.createElement("precio");
+                elementPrecio.appendChild(doc.createTextNode(precio));
+                
+                Element element = doc.createElement("coche");
+                
+                nodoArrel.appendChild(element);
+                
+                 element.setAttribute("id", id);
+                 element.setIdAttribute("id", true);
+                 element.appendChild(elementMarca);
+                 element.appendChild(elementMatricula);
+                 element.appendChild(elementPrecio);
+                 
+               chi=1;
+           
+           }
+    }
+    
 }
-}
-}
+
