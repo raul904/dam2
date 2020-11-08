@@ -1,0 +1,54 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Act5;
+
+import java.util.Scanner;
+
+
+/**
+ *
+ * @author Raul
+ */
+public class Act5 {
+    
+    public static void main(String[] args) throws Exception{
+        
+     Scanner sc = new Scanner(System.in);   
+    
+    
+    String descifrado,fichero_pri,fichero_pub,texto;
+			
+    System.out.println("Introdueix el text:");
+    
+    texto = sc.next();
+    
+    for(int i=0;i<100;i++){
+    
+    fichero_pri="rsa.pri.txt";
+    fichero_pub="rsa.pub.txt";
+    
+    RSA rsa = new RSA();
+    rsa.genKeyPair(4096);
+    rsa.saveToDiskPrivateKey("rsa.pri.txt");
+    rsa.saveToDiskPublicKey("rsa.pub.txt");
+		
+    String secure = rsa.Encrypt(texto);
+    
+    System.out.println(secure);
+    
+    RSA rsa2 = new RSA();
+    
+    rsa2.openFromDiskPrivateKey("rsa.pri.txt");
+    rsa2.openFromDiskPublicKey("rsa.pub.txt");
+    
+    String unsecure = rsa2.Decrypt(secure);
+    
+    System.out.println("Descifrado:");
+    System.out.println(unsecure);
+    
+    }
+    }
+}
