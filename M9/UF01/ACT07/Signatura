@@ -1,0 +1,128 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Act7;
+
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.SecureRandom;
+import java.security.Signature;
+import java.security.SignatureException;
+import java.util.Base64;
+import java.util.Scanner;
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+
+/**
+ *
+ * @author Raul
+ */
+public class Signatura {
+     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, InvalidKeyException, SignatureException, Exception{
+         
+    Scanner sc = new Scanner(System.in);
+     
+    KeyPair pair = generateKeyPair();
+    //Introducir mensaje 
+        System.out.println("Generant claus publiques i provades (arxius clauPublica i clauPrivada)...OK\n" +
+        "Introdueix el missatge a signar:");
+
+     String mensaje = sc.nextLine();
+     
+     //Encriptar mensaje
+
+    byte [] firma;
+    
+    byte [] mensajeBytes;
+    
+    mensajeBytes = mensaje.getBytes();
+    
+
+    PublicKey llavePublica;
+    llavePublica=pair.getPublic();
+    PrivateKey llavePrivada;
+    llavePrivada=pair.getPrivate();
+    
+
+    firma=signData(mensajeBytes,llavePrivada);
+    
+    System.out.println("Signant el missatge...OK\n" +"Generant arxiu firma_missatge...OK\n" +"Generant arxiu missatge...OK");
+    
+    
+    try{
+    FileWriter firmatxt = null;
+                BufferedOutputStream fr = new BufferedOutputStream (new FileOutputStream("C:\\Users\\Raul\\Documents\\NetBeansProjects\\m9\\src\\Act7\\firma.txt"));
+                fr.write(firma); 
+                fr.close();
+                
+           
+    }catch(IOException ex){
+        System.out.println("Error");
+    }
+    
+      FileWriter message = null; 
+		message = new FileWriter("C:\\Users\\Raul\\Documents\\NetBeansProjects\\m9\\src\\Act7\\mensaje.txt");
+	
+		message.write(mensaje);
+		message.close();    
+    
+    Base64.Encoder encoder = Base64.getEncoder();
+    try{
+      FileWriter txtPublica = null; 
+		txtPublica = new FileWriter("C:\\Users\\Raul\\Documents\\NetBeansProjects\\m9\\src\\Act7\\clavePublica.txt");
+	
+		txtPublica.write(encoder.encodeToString(llavePublica.getEncoded()));
+		txtPublica.close();
+    }catch(IOException ex){
+        System.out.println("Error");
+    }
+    
+     try{
+      FileWriter txtPrivada = null; 
+		txtPrivada = new FileWriter("C:\\Users\\Raul\\Documents\\NetBeansProjects\\m9\\src\\Act7\\clavePrivada.txt");
+	
+		txtPrivada.write(encoder.encodeToString(llavePrivada.getEncoded()));
+		txtPrivada.close();
+    }catch(IOException ex){
+        System.out.println("Error");
+    }
+ 
+          
+     
+     }
+
+    public static KeyPair generateKeyPair() throws NoSuchAlgorithmException {
+        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+        generator.initialize(2048, new SecureRandom());
+        KeyPair pair = generator.generateKeyPair();
+        
+        return pair;
+    }
+    
+    public static byte[] signData(byte[] data, PrivateKey priv) {
+        byte[] signature = null;
+        try {
+            Signature signer = Signature.getInstance("SHA1withRSA");
+            signer.initSign(priv);
+            signer.update(data);
+            signature = signer.sign();
+        }
+        catch (Exception ex) {
+            System.err.println("Error signant les dades: " + ex);
+        }
+            return signature;
+    }
+
+    
+}
