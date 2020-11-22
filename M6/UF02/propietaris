@@ -1,0 +1,62 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package actpropietarios;
+
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+/**
+ *
+ * @author Raul
+ */
+  @Entity
+public class propietaris implements Serializable {
+    
+    private String nomPropietari;
+    private Date nacimiento;
+    private boolean cocheEmpresa;  
+    private int gastosCombustible;
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue
+    private long id;  
+
+    public propietaris(String nomPropietari, Date nacimiento, boolean cocheEmpresa, int gastosCombustible) {
+        this.nomPropietari = nomPropietari;
+        this.nacimiento = nacimiento;
+        this.cocheEmpresa = cocheEmpresa;
+        this.gastosCombustible = gastosCombustible;
+    }
+
+        public propietaris() {
+    }
+        
+        public String getNomPropietari() {
+        return nomPropietari;
+        }
+
+         public Date getNacimiento() {
+        return nacimiento;
+        }
+
+        public boolean isCocheEmpresa() {
+        return cocheEmpresa;
+        }
+
+        public int getGastosCombustible() {
+        return gastosCombustible;
+        }
+
+    @Override
+    public String toString() {
+        return "propietari{" + "nomPropietari=" + nomPropietari + ", nacimiento=" + nacimiento + ", cocheEmpresa=" + cocheEmpresa + ", gastosCombustible=" + gastosCombustible + '}';
+    }
+    
+}
