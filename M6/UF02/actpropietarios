@@ -1,0 +1,105 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package actpropietarios;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+/**
+ *
+ * @author Raul
+ */
+public class ActPropietarios {
+
+    public static void main(String[] args) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+          Scanner sc = new Scanner(System.in);
+           String fecha;
+           String fecha2;
+        // Open a database connection
+        // (create a new database if it doesn't exist yet):
+        EntityManagerFactory emf =
+        Persistence.createEntityManagerFactory("$objectdb/db/p2.odb");
+        EntityManager em = emf.createEntityManager();
+ 
+        em.getTransaction().begin();
+       int chivato=0;
+        while( chivato!=1 ){
+        int variable;
+        System.out.println("\n1)Omplit taula propietaris \n2)Omplir taula coches\n3)Consultar taula Propietaris\n4)Consultar taula coches\n5)Sortir");
+        
+        variable= sc.nextInt();
+       //omplir base de dades 
+        if(variable==1){
+       System.out.println("Introdueix el nom del propietari");
+            String nomPropietari = sc.next();
+       System.out.println("Es coche d'empresa");      
+            boolean cocheEmpresa = sc.nextBoolean();
+       System.out.println("Data naixement propietari");
+            fecha=sc.next();
+            Date nacimiento = sdf.parse(fecha);
+       System.out.println("Cost combustible en euros:");
+            int gastosCombustible= sc.nextInt();
+       propietaris p = new propietaris(nomPropietari,nacimiento,cocheEmpresa,gastosCombustible); 
+         em.persist(p);
+             
+        }
+        
+        if(variable==2){
+        System.out.println("Introdueix la marca del coche");
+            String coche = sc.next();
+        System.out.println("Introdueix el model");
+            String modelCoche = sc.next();
+        System.out.println("Introduiex la data de compra del coche");
+            fecha2=sc.next();
+            Date any = sdf.parse(fecha2);
+        System.out.println("Es manual?");
+            boolean manual = sc.nextBoolean();
+        System.out.println("Introdueix el preu del vehicle");
+            int preu = sc.nextInt();
+       
+        Coches c = new Coches (coche,modelCoche,any,manual,preu);
+             em.persist(c);
+
+        }
+        //concultas
+        if(variable==3){
+        TypedQuery<propietaris> query =
+            em.createQuery("SELECT p FROM propietaris p", propietaris.class);
+        List<propietaris> results = query.getResultList();
+        for (propietaris p : results) {
+            System.out.println(p);
+        }
+
+        }
+
+        if(variable==4){
+        TypedQuery<Coches> query2 =
+            em.createQuery("SELECT c FROM Coches c", Coches.class);
+        List<Coches> results = query2.getResultList();
+        for (Coches c : results) {
+            System.out.println(c);
+        }
+
+        }
+
+        if(variable==5){
+        chivato=1;
+        }
+         
+        }
+        em.getTransaction().commit(); 
+        em.close();
+        emf.close();
+    }
+}
