@@ -1,0 +1,70 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package actpropietarios;
+
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+/**
+ *
+ * @author Raul
+ */
+ @Entity
+public class Coches {
+    
+    private String coche;
+    private String modelCoche;
+    private Date any;
+    private boolean manual;
+    private int preu;
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue
+    private long id;
+
+    public Coches(String coche, String modelCoche, Date any, boolean manual, int preu) {
+        this.coche = coche;
+        this.modelCoche = modelCoche;
+        this.any = any;
+        this.manual = manual;
+        this.preu = preu;
+    }
+    
+
+      
+      public Coches() {
+      }
+
+
+    public String getCoche() {
+         return coche;
+    }
+
+    public String getModelCoche() {
+         return modelCoche;
+    }
+    
+    public Date getAny(){
+        return any;
+    }
+    
+    public boolean getManual(){
+        return manual;
+    }
+    
+    public int getPreu(){
+        return preu;
+    }
+
+    @Override
+    public String toString() {
+        return "Coches{" + "coche=" + coche + ", modelCoche=" + modelCoche + ", any=" + any + ", manual=" + manual + ", preu=" + preu + '}';
+    }
+ 
+}
